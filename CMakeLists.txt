@@ -17,6 +17,8 @@ file(GLOB _clingo_generated ${CMAKE_SWIG_OUTDIR}/*.java)
 
 # Build the C++ code into a dynamic library: example.dll (on Windows) or libexample.so (on Linux)
 set_property(SOURCE _clingo.i PROPERTY USE_TARGET_INCLUDE_DIRECTORIES ON)
+set_property(SOURCE _clingo.i PROPERTY CPLUSPLUS ON)
+
 swig_add_library(
     _clingo 
     TYPE MODULE
