@@ -34,7 +34,7 @@ cmake --build build
 
 If everything went right, the example can be executed like this:
 ```bash
-➜ java -Djava.library.path=build -jar build/example.jar
+➜ java -classpath build/org.jclingo.swig.jar:build/example.jar -Djava.library.path=build example
 version: 5.5.0
 ANSWER: a b
 ```

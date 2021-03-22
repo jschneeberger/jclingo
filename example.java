@@ -1,3 +1,5 @@
+import org.jclingo.swig.*;
+
 public class example {
 
     static class ModelPrinter extends SolveEventCallback {

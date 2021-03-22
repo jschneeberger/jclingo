@@ -10,22 +10,22 @@ include(UseJava)
 include(UseSWIG)
 include_directories(${JNI_INCLUDE_DIRS})
 
-set(CMAKE_SWIG_OUTDIR ${CMAKE_CURRENT_BINARY_DIR}/swig)
-
-# TODO: this is just for development and requires to configure/build twice
-file(GLOB _clingo_generated ${CMAKE_SWIG_OUTDIR}/*.java)
-
 # Build the C++ code into a dynamic library: example.dll (on Windows) or libexample.so (on Linux)
 set_property(SOURCE _clingo.i PROPERTY USE_TARGET_INCLUDE_DIRECTORIES ON)
 set_property(SOURCE _clingo.i PROPERTY CPLUSPLUS ON)
+set_property(SOURCE _clingo.i PROPERTY COMPILE_OPTIONS "-package;org.jclingo.swig")
 
 swig_add_library(
     _clingo 
     TYPE MODULE
     LANGUAGE java 
     SOURCES _clingo.i 
+    OUTPUT_DIR "${CMAKE_CURRENT_BINARY_DIR}/generated/org/jclingo/swig"
 )
 swig_link_libraries(_clingo libclingo)
+
+# TODO: this is just for development and requires to configure/build twice
+file(GLOB _clingo_generated "${CMAKE_CURRENT_BINARY_DIR}/generated/org/jclingo/swig/*.java")
 
 # For convenience we copy the dynamic library to the current build folder
 add_custom_command(
@@ -35,11 +35,9 @@ add_custom_command(
 )
 
 # Build the Java code into ExampleJNI.jar
-add_jar(
-    example
-    SOURCES
-    ${_clingo_generated}
-    SOURCES example.java
-    ENTRY_POINT example
-)
-add_dependencies(example _clingo)
+set(CMAKE_JAR_CLASSES_PREFIX org/jclingo/swig)
+add_jar(org.jclingo.swig SOURCES ${_clingo_generated})
+add_dependencies(org.jclingo.swig _clingo)
+
+set(CMAKE_JAR_CLASSES_PREFIX)
+add_jar(example SOURCES example.java ENTRY_POINT example INCLUDE_JARS org.jclingo.swig)
