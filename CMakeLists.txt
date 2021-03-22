@@ -36,8 +36,8 @@ add_custom_command(
 
 # Build the Java code into ExampleJNI.jar
 set(CMAKE_JAR_CLASSES_PREFIX org/jclingo/swig)
-add_jar(org.jclingo.swig SOURCES ${_clingo_generated})
-add_dependencies(org.jclingo.swig _clingo)
+add_jar(jclingo_swig SOURCES ${_clingo_generated})
+add_dependencies(jclingo_swig _clingo)
 
 set(CMAKE_JAR_CLASSES_PREFIX)
-add_jar(example SOURCES example.java ENTRY_POINT example INCLUDE_JARS org.jclingo.swig)
+add_jar(example SOURCES example.java ENTRY_POINT example INCLUDE_JARS jclingo_swig)
