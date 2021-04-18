@@ -23,7 +23,7 @@ listed in `CMakeLists.txt` file. This can wait till the final version of the
 package because I expect this list of files to change a lot during development.
 
 ```bash
-sudo add-apt-repository ppa:potassco/focal-wip
+sudo add-apt-repository ppa:potassco/wip
 sudo apt-get update
 sudo apt install cmake swig openjdk-14-jdk g++ libclingo-dev
 cmake -DJAVA_HOME=/usr/lib/jvm/java-14-openjdk-amd64 -B build
